@@ -9,9 +9,12 @@
 
   -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	   xmlns:xacro="http://www.ros.org/wiki/xacro"
 	   targetNamespace="http://www.ros.org"
 	   xmlns="http://www.ros.org"
 	   elementFormDefault="qualified">
+
+  <xs:import namespace="http://www.ros.org/wiki/xacro" schemaLocation="xacro.xsd" />
 
   <!-- pose node type -->
   <xs:complexType name="pose">
@@ -148,14 +151,11 @@
 
   <!-- link node type -->
   <xs:complexType name="link">
-    <xs:all>
-      <xs:element name="inertial"
-		  type="inertial" minOccurs="0" maxOccurs="1" />
-      <xs:element name="visual"
-		  type="visual" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="collision"
-		  type="collision" minOccurs="0" maxOccurs="unbounded" />
-    </xs:all>
+    <xs:sequence minOccurs='0' maxOccurs='unbounded'>
+      <xs:element name="inertial" type="inertial" minOccurs='0' maxOccurs='unbounded' />
+      <xs:element name="visual" type="visual" minOccurs='0' maxOccurs='unbounded' />
+      <xs:element name="collision" type="collision" minOccurs='0' maxOccurs='unbounded' />
+    </xs:sequence>
     <xs:attribute name="name" type="xs:string" use="required" />
 
     <!-- FIXME: undocumented but used by PR2 -->
@@ -296,24 +296,34 @@
     <xs:attribute name="type" type="xs:string" use="required" />
   </xs:complexType>
 
+  <xs:element name="joint" type="joint" />
+  <xs:element name="link" type="link" />
+  <xs:element name="material" type="material_global" />
+  <xs:element name="transmission" type="transmission" />
+
   <!-- root node is always robot -->
   <xs:element name="robot">
     <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-	<xs:element name="joint"
-		    type="joint" minOccurs="0" maxOccurs="unbounded" />
-	<xs:element name="link"
-		    type="link" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="joint" type="joint" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="link" type="link" minOccurs="0" maxOccurs="unbounded" />
 
-	<!-- FIXME: this is used but undocumented -->
-	<xs:element name="material"
-		    type="material_global" minOccurs="0" maxOccurs="unbounded" />
+        <!-- FIXME: this is used but undocumented -->
+        <xs:element name="material" type="material_global" minOccurs="0" maxOccurs="unbounded" />
 
-	<!-- FIXME: this is used but undocumented -->
-	<xs:element name="transmission"
-		    type="transmission" minOccurs="0" maxOccurs="unbounded" />
+        <!-- FIXME: this is used but undocumented -->
+        <xs:element name="transmission" type="transmission" minOccurs="0" maxOccurs="unbounded" />
 
-	<!-- FIXME: gazebo extension not supported -->
+        <!-- FIXME: gazebo extension not supported -->
+
+        <!-- xacro -->
+        <xs:element ref="xacro:property" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="xacro:insert_block" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="xacro:if" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="xacro:unless" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="xacro:arg" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="xacro:macro" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="xacro:include" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
       <xs:attribute name="name" type="xs:string" use="required" />
 

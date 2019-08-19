@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<!--
+   XML Schema for xacro
+  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.ros.org/wiki/xacro" xmlns="http://www.ros.org/wiki/xacro" xmlns:urdf="http://www.ros.org" elementFormDefault="qualified">
+
+  <xs:import namespace="http://www.ros.org" schemaLocation="urdf.xsd" />
+
+  <xs:element name="property">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="insert_block">
+    <xs:complexType>
+      <xs:attribute name="name" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="if">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="urdf:joint" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:link" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:material" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:transmission" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="insert_block" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="unless">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="urdf:joint" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:link" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:material" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:transmission" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="insert_block" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="value" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="arg">
+    <xs:complexType>
+      <xs:annotation>
+        <xs:documentation>
+        Specifies arguments passed via command-line, via an include, or declared for higher-level files.
+        Args are not global. Use $(arg name) to read an argument.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="default" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="macro">
+    <xs:complexType>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="urdf:joint" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:link" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:material" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="urdf:transmission" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="insert_block" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+      <xs:attribute name="value" type="xs:string" use="required" />
+      <xs:attribute name="params" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:attribute name="filename" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
